@@ -44,22 +44,24 @@ class _TelaResultadoState extends State<TelaResultado> {
                     Wrap(
                       children: [
                         ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                numero = retorno.numero - 1;
-                              });
-                            },
-                            child: const Text('Anterior')),
+                          onPressed: () {
+                            setState(() {
+                              numero = retorno.numero - 1;
+                            });
+                          },
+                          child: const Text('Anterior'),
+                        ),
                         const SizedBox(
                           width: 8.0,
                         ),
                         ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                numero = retorno.numero + 1;
-                              });
-                            },
-                            child: const Text('Próximo')),
+                          onPressed: () {
+                            setState(() {
+                              numero = retorno.numero + 1;
+                            });
+                          },
+                          child: const Text('Próximo'),
+                        ),
                       ],
                     ),
                     estaAcumulado(retorno),
@@ -70,7 +72,19 @@ class _TelaResultadoState extends State<TelaResultado> {
                   ]),
                 );
               } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
+                return Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          numero = numero! - 1;
+                        });
+                      },
+                      child: const Text('Voltar'),
+                    ),
+                    Text('Falha ao carregar o Resultado.'),
+                  ],
+                );
               }
 
               return const CircularProgressIndicator();
@@ -99,8 +113,7 @@ class _TelaResultadoState extends State<TelaResultado> {
 
   Widget valorEspecial(Resultado resultado) {
     return Visibility(
-        visible: resultado.tipoJogo == 'TIMEMANIA' ||
-            resultado.tipoJogo == 'DIA_DE_SORTE',
+        visible: resultado.temValorEspecial(),
         child: Text(
           resultado.tpValorEspecial() + resultado.nomeTimeCoracaoMesSorte,
           style: const TextStyle(
@@ -166,6 +179,10 @@ class _TelaResultadoState extends State<TelaResultado> {
   }
 
   Widget detalhamento(List<MunicipioGanhador> municipios) {
+    if (municipios.isEmpty) {
+      return SizedBox.shrink();
+    }
+
     return Column(children: [
       const Text(
         "Detalhamento",

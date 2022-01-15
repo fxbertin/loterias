@@ -18,7 +18,6 @@ class Dashboard extends StatelessWidget {
 }
 
 Widget jogos(BuildContext context) {
-
   return Column(
     children: [
       for (var jogo in Jogo.values)
@@ -32,7 +31,7 @@ Widget jogos(BuildContext context) {
             color: jogo.cor,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(
+              child:  Text(
                 jogo.nome,
                 textAlign: TextAlign.center,
                 style: const TextStyle(

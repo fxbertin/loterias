@@ -1,30 +1,41 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:loteria/main.dart';
+import 'package:loteria/screens/dashboard.dart';
+import 'package:loteria/screens/resultado.dart';
+import 'package:loteria/tipos_jogos.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Tem que ter um botão para cada tipo de jogo',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(Loteria());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    final totalJogos = Jogo.values.length;
+    expect(find.byType(Dashboard), findsOneWidget);
+    expect(find.byType(InkWell), findsNWidgets(totalJogos));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.tap(find.byWidgetPredicate((widget) {
+      if (widget is Text) {
+        return widget.data == Jogo.megaSena.nome;
+      }
+      return false;
+    }));
+    await tester.pumpAndSettle();
+    expect(find.byType(TelaResultado), findsOneWidget);
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('Se clicar em algum jogo abre a tela de resultado',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(Loteria());
+
+    await tester.tap(find.byWidgetPredicate((widget) {
+      if (widget is Text) {
+        return widget.data == Jogo.megaSena.nome;
+      }
+      return false;
+    }));
+    await tester.pumpAndSettle();
+    expect(find.byType(TelaResultado), findsOneWidget);
   });
 }

@@ -53,9 +53,9 @@ extension JogoExtension on Jogo {
       case Jogo.lotoFacil:
         return Colors.purple;
       case Jogo.diaSorte:
-        return Colors.yellow;
+        return const Color.fromRGBO(234, 225, 56, 50.0);
       case Jogo.timemania:
-        return Colors.yellowAccent;
+        return const Color.fromRGBO(100, 193, 21, 50.0);
       default:
         return Colors.black;
     }
