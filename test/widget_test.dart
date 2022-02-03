@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:loteria/main.dart';
 import 'package:loteria/screens/dashboard.dart';
-import 'package:loteria/screens/resultado.dart';
+import 'package:loteria/screens/resultado/resultado.dart';
 import 'package:loteria/tipos_jogos.dart';
 
 void main() {

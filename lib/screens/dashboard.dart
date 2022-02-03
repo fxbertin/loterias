@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:loteria/screens/resultado.dart';
+import 'package:loteria/screens/resultado/resultado.dart';
 import 'package:loteria/tipos_jogos.dart';
 
 class Dashboard extends StatelessWidget {
